@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shairport-sync
-PKG_VERSION:=2.1.15
+PKG_VERSION:=2.8.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -17,10 +17,10 @@ PKG_SOURCE_URL:=git://github.com/mikebrady/shairport-sync.git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
+PKG_MAINTAINER:=Mike Brady <mikebrady@eircom.net>
 
 PKG_LICENSE:=MIT
-PKG_LICENSE_FILES:=COPYING LICENSES shairport.c
+PKG_LICENSE_FILES:=LICENSES
 
 PKG_BUILD_PARALLEL:=1
 
@@ -32,14 +32,15 @@ CONFIGURE_ARGS+= \
 	--with-alsa \
 	--with-avahi \
 	--with-soxr \
-	--with-ssl=openssl
+	--with-ssl=openssl \
+	--sysconfdir=/etc
 
 
 define Package/shairport-sync
   SECTION:=sound
   CATEGORY:=Sound
   TITLE:=iPhone/iTunes compatible audio player
-  DEPENDS:= +libpthread +libopenssl +libavahi-client +alsa-lib +libdaemon +libsoxr +libpopt
+  DEPENDS:= +libpthread +libopenssl +libavahi-client +alsa-lib +libdaemon +libsoxr +libpopt +libconfig
   MAINTAINER:=Mike Brady <mikebrady@eircom.net>
 endef
 
