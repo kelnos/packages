@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gst1-plugins-bad
-PKG_VERSION:=1.4.5
+PKG_VERSION:=1.9.90
 PKG_RELEASE:=2
 
 PKG_MAINTAINER:=W. Michael Petullo <mike@flyn.org>
@@ -19,11 +19,11 @@ PKG_LICENSE_FILES:=COPYING.LIB COPYING
 PKG_BUILD_DIR:=$(BUILD_DIR)/gst-plugins-bad-$(PKG_VERSION)
 PKG_SOURCE:=gst-plugins-bad-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://gstreamer.freedesktop.org/src/gst-plugins-bad/
-PKG_MD5SUM:=e0bb39412cf4a48fe0397bcf3a7cd451
+PKG_MD5SUM:=9b580d751aa24fb743f7e40b1169f797
 
 PKG_BUILD_DEPENDS:= libgstreamer1 gstreamer1-plugins-base
 
-PKG_FIXUP:=autoreconf
+# PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -154,12 +154,14 @@ CONFIGURE_ARGS += \
 	--without-libintl-prefix \
 	--with-libgcrypt-prefix="$(STAGING_DIR)/usr" \
 	--without-x \
+	--disable-gtk-doc-html \
 
 TARGET_CFLAGS+= -std=gnu99
 
 EXTRA_LDFLAGS+= \
 	-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \
 	$(if $(ICONV_FULL),-liconv) \
+	-Wl,-rpath-link=$(PKG_BUILD_DIR)/gst-libs/gst/uridownloader/.libs
 
 
 define Package/gst1-plugins-bad/install
@@ -201,6 +203,8 @@ endef
 
 $(eval $(call GstBuildLibrary,photography,photography,,))
 $(eval $(call GstBuildLibrary,basecamerabinsrc,basecamerabinsrc,app,))
+$(eval $(call GstBuildLibrary,uridownloader,URI downloader,,))
+$(eval $(call GstBuildLibrary,adaptivedemux,adaptivedemux,uridownloader app,))
 
 # 1: short name
 # 2: description
@@ -239,7 +243,7 @@ endef
 
 $(eval $(call GstBuildPlugin,adpcmdec,adpcm decoding support,audio,,))
 $(eval $(call GstBuildPlugin,adpcmenc,adpcm encoding support,audio,,))
-$(eval $(call GstBuildPlugin,aiff,aiff support,audio tag,,))
+$(eval $(call GstBuildPlugin,aiff,aiff support,audio tag pbutils,,))
 $(eval $(call GstBuildPlugin,asfmux,asf muxing support,rtp,,))
 $(eval $(call GstBuildPlugin,autoconvert,autoconvert support,,,))
 $(eval $(call GstBuildPlugin,bayer,bayer support,video,,))
@@ -251,18 +255,18 @@ $(eval $(call GstBuildPlugin,festival,festival support,audio,,))
 $(eval $(call GstBuildPlugin,frei0r,frei0r support,controller video,,))
 $(eval $(call GstBuildPlugin,id3tag,id3tag support,tag,,))
 $(eval $(call GstBuildPlugin,jpegformat,jpegformat support,tag,,))
-$(eval $(call GstBuildPlugin,liveadder,liveadder support,audio,,))
+# $(eval $(call GstBuildPlugin,liveadder,liveadder support,audio,,))
 $(eval $(call GstBuildPlugin,mpegpsdemux,mpegpsdemux support,pbutils tag,,))
 $(eval $(call GstBuildPlugin,mpegpsmux,mpegpsmux support,,,))
 #$(eval $(call GstBuildPlugin,mpegtsdemux,mpegtsdemux support,mpegts pbutils tag,,))
 #$(eval $(call GstBuildPlugin,mpegtsmux,mpegtsmux support,video,,))
-$(eval $(call GstBuildPlugin,mxf,mxf support,audio video,,))
-$(eval $(call GstBuildPlugin,opus,OPUS plugin library,audio tag rtp,,+libopus))
+# $(eval $(call GstBuildPlugin,mxf,mxf support,audio video,,+libgstbadbase))
+# $(eval $(call GstBuildPlugin,opus,OPUS plugin library,audio tag rtp,,+libopus))
 $(eval $(call GstBuildPlugin,pcapparse,pcapparse support,,,))
 $(eval $(call GstBuildPlugin,pnm,pnm support,video,,))
 $(eval $(call GstBuildPlugin,rawparse,rawparse support,audio video,,))
 $(eval $(call GstBuildPlugin,rfbsrc,librfb support,video,,))
-$(eval $(call GstBuildPlugin,sdpelem,sdp support,rtp sdp,,))
+$(eval $(call GstBuildPlugin,sdpelem,sdp support,rtp sdp app,,))
 $(eval $(call GstBuildPlugin,segmentclip,segmentclip support,audio,,))
 $(eval $(call GstBuildPlugin,shm,POSIX shared memory source and sink,,,+librt))
 $(eval $(call GstBuildPlugin,siren,siren support,audio rtp,,))

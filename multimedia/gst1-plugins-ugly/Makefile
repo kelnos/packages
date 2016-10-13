@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gst1-plugins-ugly
-PKG_VERSION:=1.4.5
+PKG_VERSION:=1.9.90
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=W. Michael Petullo <mike@flyn.org>
@@ -19,7 +19,7 @@ PKG_LICENSE_FILES:=COPYING
 PKG_BUILD_DIR:=$(BUILD_DIR)/gst-plugins-ugly-$(PKG_VERSION)
 PKG_SOURCE:=gst-plugins-ugly-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://gstreamer.freedesktop.org/src/gst-plugins-ugly/
-PKG_MD5SUM:=6954beed7bb9a93e426dee543ff46393
+PKG_MD5SUM:=732f0abccd92534da306c5f89c7e5816
 
 PKG_BUILD_DEPENDS:= libgstreamer1 gstreamer1-plugins-base
 PKG_CONFIG_DEPENDS:= \
@@ -111,8 +111,6 @@ CONFIGURE_ARGS += \
 	$(call GST_COND_SELECT,lame) \
 	$(call GST_COND_SELECT,mad) \
 	$(call GST_COND_SELECT,mpeg2dec) \
-	--disable-mpegaudioparse \
-	--disable-mpegstream \
 	--disable-realmedia \
 	--disable-sidplay \
 	--disable-synaesthesia \
@@ -121,6 +119,9 @@ CONFIGURE_ARGS += \
 	\
 	--without-libiconv-prefix \
 	--without-libintl-prefix \
+	--disable-gtk-doc-html \
+	--disable-mpegstream \
+	# --disable-mpegaudioparse \
 
 EXTRA_LDFLAGS+= \
 	-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \
@@ -167,7 +168,7 @@ define GstBuildPlugin
   $$(eval $$(call BuildPackage,gst1-mod-$(1)))
 endef
 
-$(eval $(call GstBuildPlugin,asf,ASF demuxer,audio riff rtp rtsp sdp tag,,))
+$(eval $(call GstBuildPlugin,asf,ASF demuxer,audio riff rtp rtsp sdp tag video,,))
 $(eval $(call GstBuildPlugin,lame,MP3 encoder (using LAME),audio,,+lame-lib))
 $(eval $(call GstBuildPlugin,mad,MP3 decoder (using MAD),audio tag,,+libid3tag +libmad))
 $(eval $(call GstBuildPlugin,mpeg2dec,MPEG decoder,video,,+libmpeg2))

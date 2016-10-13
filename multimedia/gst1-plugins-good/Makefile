@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gst1-plugins-good
-PKG_VERSION:=1.4.5
+PKG_VERSION:=1.9.90
 PKG_RELEASE:=2
 
 PKG_MAINTAINER:=W. Michael Petullo <mike@flyn.org>
@@ -19,11 +19,11 @@ PKG_LICENSE_FILES:=COPYING
 PKG_BUILD_DIR:=$(BUILD_DIR)/gst-plugins-good-$(PKG_VERSION)
 PKG_SOURCE:=gst-plugins-good-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://gstreamer.freedesktop.org/src/gst-plugins-good/
-PKG_MD5SUM:=eaf1a6daf73749bc423feac301d60038
+PKG_MD5SUM:=fbcbcf391d4509e4679ce36ec89b3c4a
 
 PKG_BUILD_DEPENDS:= libgstreamer1 gstreamer1-plugins-base
 
-PKG_FIXUP:=autoreconf
+# PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -122,6 +122,7 @@ CONFIGURE_ARGS += \
 	--without-libiconv-prefix \
 	--without-libintl-prefix \
 	--without-x \
+	--disable-gtk-doc-html
 
 EXTRA_LDFLAGS+= \
 	-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \
@@ -189,8 +190,8 @@ $(eval $(call GstBuildPlugin,flac,FLAC codec,audio pbutils tag,,+libflac))
 $(eval $(call GstBuildPlugin,flv,flv codec,audio pbutils tag video,,))
 $(eval $(call GstBuildPlugin,flxdec,flx codec,,,))
 #$(eval $(call GstBuildPlugin,gdkpixbuf,gdkpixbuf support,video,,))
-$(eval $(call GstBuildPlugin,goom2k1,goom support,,,))
-$(eval $(call GstBuildPlugin,goom,goom support,,,))
+$(eval $(call GstBuildPlugin,goom2k1,goom support,pbutils,,))
+$(eval $(call GstBuildPlugin,goom,goom support,pbutils,,))
 $(eval $(call GstBuildPlugin,icydemux,icy demuxer,audio tag,,))
 $(eval $(call GstBuildPlugin,id3demux,ID3v1/v2 demuxer,pbutils tag,,))
 $(eval $(call GstBuildPlugin,imagefreeze,imagefreeze support,,,))
@@ -229,7 +230,7 @@ $(eval $(call GstBuildPlugin,videomixer,videomixer support,video,,))
 $(eval $(call GstBuildPlugin,vpx,vpx support,tag video,,+libvpx))
 $(eval $(call GstBuildPlugin,wavenc,Wav encoder,riff,,))
 #$(eval $(call GstBuildPlugin,wavpack,Wav packer,audio riff tag,,))
-$(eval $(call GstBuildPlugin,wavparse,Wav parser,audio riff tag,,))
+$(eval $(call GstBuildPlugin,wavparse,Wav parser,audio riff tag pbutils,,))
 #$(eval $(call GstBuildPlugin,ximagesrc,ximagesrc support,video,,))
 
 $(eval $(call BuildPackage,gstreamer1-plugins-good))

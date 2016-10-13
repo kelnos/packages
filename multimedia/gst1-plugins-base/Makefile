@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gst1-plugins-base
-PKG_VERSION:=1.4.5
+PKG_VERSION:=1.9.90
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=W. Michael Petullo <mike@flyn.org>
@@ -19,7 +19,7 @@ PKG_LICENSE_FILES:=COPYING.LIB COPYING
 PKG_BUILD_DIR:=$(BUILD_DIR)/gst-plugins-base-$(PKG_VERSION)
 PKG_SOURCE:=gst-plugins-base-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=http://gstreamer.freedesktop.org/src/gst-plugins-base/
-PKG_MD5SUM:=357165af625c0ca353ab47c5d843920e
+PKG_MD5SUM:=4d25a4d3dea36e350450cddb807c8fb1
 
 PKG_BUILD_DEPENDS:= libgstreamer1
 PKG_CONFIG_DEPENDS:= \
@@ -39,7 +39,7 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_PACKAGE_gst1-mod-vorbis \
 	CONFIG_PACKAGE_libgst1app \
 
-PKG_FIXUP:=autoreconf
+# PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -130,7 +130,6 @@ CONFIGURE_ARGS += \
 	--disable-libvisual \
 	$(call GST_COND_SELECT,ogg) \
 	--disable-pango \
-	--disable-subparse \
 	$(call GST_COND_SELECT,tcp) \
 	$(call GST_COND_SELECT,theora) \
 	$(call GST_COND_SELECT,videorate) \
@@ -148,7 +147,11 @@ CONFIGURE_ARGS += \
 	--without-x \
 	\
 	--with-audioresample-format=int \
+	--disable-gtk-doc-html \
+	# --disable-subparse \
 
+TARGET_CFLAGS+=-std=gnu99 
+	
 EXTRA_LDFLAGS+= \
 	-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \
 	$(if $(ICONV_FULL),-liconv) \
@@ -227,7 +230,7 @@ $(eval $(call GstBuildLibrary,pbutils,utils,audio tag video,))
 $(eval $(call GstBuildLibrary,riff,RIFF media,audio tag,,))
 $(eval $(call GstBuildLibrary,rtp,RTP,,))
 $(eval $(call GstBuildLibrary,rtsp,RTSP,,))
-$(eval $(call GstBuildLibrary,sdp,SDP,,))
+$(eval $(call GstBuildLibrary,sdp,SDP,rtp,))
 $(eval $(call GstBuildLibrary,tag,tag support,,))
 $(eval $(call GstBuildLibrary,video,video,,))
 
@@ -275,7 +278,7 @@ $(eval $(call GstBuildPlugin,audiotestsrc,audio test,audio tag controller,,))
 $(eval $(call GstBuildPlugin,playback,media decoder (v2),pbutils,,))
 $(eval $(call GstBuildPlugin,gio,GIO,,,))
 $(eval $(call GstBuildPlugin,ogg,Ogg,riff tag pbutils video,,+libogg))
-$(eval $(call GstBuildPlugin,tcp,TCP,,,))
+$(eval $(call GstBuildPlugin,tcp,TCP,net,,))
 $(eval $(call GstBuildPlugin,theora,Theora,tag video,,+libogg +libtheora))
 $(eval $(call GstBuildPlugin,typefindfunctions,'typefind' functions,audio pbutils tag video,,))
 $(eval $(call GstBuildPlugin,videoconvert,video format conversion,video,,))
