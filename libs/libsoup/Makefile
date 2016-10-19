@@ -43,6 +43,7 @@ define Build/Configure
 		--without-apache-httpd \
 		--without-gnome \
 		--enable-vala=no \
+		--enable-introspection=no \
 	)
 endef
 
