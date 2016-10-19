@@ -155,6 +155,7 @@ CONFIGURE_ARGS += \
 	--with-libgcrypt-prefix="$(STAGING_DIR)/usr" \
 	--without-x \
 	--disable-gtk-doc-html \
+	--enable-introspection=no \
 
 TARGET_CFLAGS+= -std=gnu99
 

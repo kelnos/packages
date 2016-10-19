@@ -148,6 +148,7 @@ CONFIGURE_ARGS += \
 	\
 	--with-audioresample-format=int \
 	--disable-gtk-doc-html \
+	--enable-introspection=no \
 	# --disable-subparse \
 
 TARGET_CFLAGS+=-std=gnu99 

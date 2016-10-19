@@ -122,7 +122,8 @@ CONFIGURE_ARGS += \
 	--without-libiconv-prefix \
 	--without-libintl-prefix \
 	--without-x \
-	--disable-gtk-doc-html
+	--disable-gtk-doc-html \
+	--enable-introspection=no \
 
 EXTRA_LDFLAGS+= \
 	-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \

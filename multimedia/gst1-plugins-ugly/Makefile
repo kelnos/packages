@@ -121,6 +121,7 @@ CONFIGURE_ARGS += \
 	--without-libintl-prefix \
 	--disable-gtk-doc-html \
 	--disable-mpegstream \
+	--enable-introspection=no \
 	# --disable-mpegaudioparse \
 
 EXTRA_LDFLAGS+= \
