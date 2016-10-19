@@ -28,7 +28,7 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_PACKAGE_gst1-mod-mad \
 	CONFIG_PACKAGE_gst1-mod-mpeg2dec \
 
-PKG_FIXUP:=autoreconf
+#PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
