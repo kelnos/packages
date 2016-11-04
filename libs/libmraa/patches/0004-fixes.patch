@@ -277,7 +277,7 @@ Subject: [PATCH 4/4] fixes
 -    b->platform_name = "LINKIT";
 +    memset(b, 0, sizeof(mraa_board_t));
 +
-+    b->platform_name = "LinkIt Smart 7688";
++    b->platform_name = "ReSpeaker-V1";
      platform_detected = PLATFORM_MEDIATEK_LINKIT;
 -    b->phy_pin_count = 31;
 +    b->phy_pin_count = 64;
