@@ -45,6 +45,7 @@ define Package/glib2/description
 endef
 
 HOST_CONFIGURE_ARGS += \
+	 CFLAGS=-Wno-error=format-nonliteral \
 	--disable-selinux
 
 CONFIGURE_ARGS += \
