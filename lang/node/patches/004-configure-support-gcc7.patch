@@ -1,0 +1,11 @@
+--- node-v0.12.7/configure.orig	2017-09-05 20:05:51.100881413 -0700
++++ node-v0.12.7/configure	2017-09-05 20:06:59.948207190 -0700
+@@ -478,6 +478,8 @@
+   proc = subprocess.Popen(shlex.split(CC) + ['-dumpversion'],
+                           stdout=subprocess.PIPE)
+   version = tuple(map(int, proc.communicate()[0].split('.')))
++  if len(version) == 1:
++    version = (version[0], 0, 0)
+ 
+   return (version, is_clang)
+ 
